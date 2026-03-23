@@ -8,6 +8,7 @@ public class Main
 
         wordle.newGuess("perro");
         wordle.newGuess("pasto");
+        wordle.newGuess("posta");
 
         System.out.println(wordle.toString());
     }
