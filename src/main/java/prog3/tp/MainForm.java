@@ -43,8 +43,7 @@ public class MainForm implements View
     public MainForm()
     {
         try {
-            UIManager.setLookAndFeel(UIManager
-                    .getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme");
         } catch (Exception e) {
             System.out.println("Error setting native look: " + e);
         }

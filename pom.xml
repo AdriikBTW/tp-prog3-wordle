@@ -14,5 +14,10 @@
       <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.formdev</groupId>
+      <artifactId>flatlaf-intellij-themes</artifactId>
+      <version>3.7.1</version>
+    </dependency>
   </dependencies>
 </project>
