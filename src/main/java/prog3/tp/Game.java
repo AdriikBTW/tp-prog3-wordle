@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Game
+public class Game implements Model
 {
     private List<Guess> _history;
+    private List<Observer> _observers;
     private String _secretWord;
     private int _attempts;
     private static final int _MAX_ATTEMPTS = 6;
@@ -15,8 +16,20 @@ public class Game
     public Game()
     {
         _history = new ArrayList<>();
+        _observers = new ArrayList<>();
         _secretWord = "pasto";
         _attempts = 0;
+    }
+
+    public void addObserver(Observer observer)
+    {
+        _observers.add(observer);
+    }
+
+    private void notifyObservers()
+    {
+        for (Observer observer : _observers)
+            observer.notify();
     }
 
     public boolean isThereAttemptsLeft()
