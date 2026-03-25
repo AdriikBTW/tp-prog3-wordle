@@ -29,7 +29,7 @@ public class Game implements Model
     private void notifyObservers()
     {
         for (Observer observer : _observers)
-            observer.notify();
+            observer.update();
     }
 
     public boolean isThereAttemptsLeft()
@@ -70,8 +70,8 @@ public class Game implements Model
             }
         }
 
-
         _history.add(new Guess(guess, status));
+        notifyObservers();
     }
 
     @Override

@@ -28,6 +28,8 @@ public class MainForm implements View
                 try {
                     MainForm window = new MainForm();
                     window.frame.setVisible(true);
+                    Game game = new Game();
+                    new Presenter(game, window);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
