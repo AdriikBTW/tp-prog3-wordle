@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 
 public class MainForm implements View
 {
-
+    private Presenter presenter;
     private JFrame frame;
     private JTextField inputUsuario;
     private JLabel mensajeFinal;
@@ -85,6 +85,8 @@ public class MainForm implements View
     }
 
     @Override
-    public void setPresenter(Presenter p)
-    {}
+    public void setPresenter(Presenter presenter)
+    {
+        this.presenter = presenter;
+    }
 }
