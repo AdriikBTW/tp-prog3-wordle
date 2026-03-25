@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class MainForm
+public class MainForm implements View
 {
 
     private JFrame frame;
@@ -83,4 +83,8 @@ public class MainForm
         mensajeFinal.setBounds(153, 53, 285, 17);
         frame.getContentPane().add(mensajeFinal);
     }
+
+    @Override
+    public void setPresenter(Presenter p)
+    {}
 }
