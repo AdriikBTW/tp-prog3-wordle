@@ -17,6 +17,16 @@ public class Guess
         _status = guess._status;
     }
 
+    public String getString()
+    {
+        return new String(_guess);
+    }
+
+    public LetterStatus[] getStatus()
+    {
+        return _status.clone();
+    }
+
     @Override
     public String toString()
     {
