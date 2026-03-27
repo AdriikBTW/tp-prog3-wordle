@@ -1,8 +1,12 @@
 package prog3.tp;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class Game implements Model
 {
@@ -10,15 +14,30 @@ public class Game implements Model
     private List<Observer> _observers;
     private String _secretWord;
     private int _attempts;
-    private static final int _MAX_ATTEMPTS = 6;
-    private static final int _WORD_LEN = 5;
+    private List<String> _fileLines;
+    private final int _MAX_ATTEMPTS = 6;
+    private final int _WORD_LEN = 5;
 
     public Game()
     {
         _history = new ArrayList<>();
         _observers = new ArrayList<>();
-        _secretWord = "pasto";
         _attempts = 0;
+
+        try {
+            _fileLines = Files.readAllLines(
+                    Path.of("src/main/resources/spanish_words.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        _secretWord = getRandomWord();
+    }
+
+    public String getRandomWord()
+    {
+        Random rng = new Random();
+        return _fileLines.get(rng.nextInt(_fileLines.size()));
     }
 
     public void addObserver(Observer observer)
