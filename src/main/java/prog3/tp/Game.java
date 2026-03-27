@@ -74,6 +74,16 @@ public class Game implements Model
         notifyObservers();
     }
 
+    public List<Guess> getHistory()
+    {
+        List<Guess> cloneHistory = new ArrayList<>();
+
+        for (Guess guess : _history)
+            cloneHistory.add(new Guess(guess));
+
+        return cloneHistory;
+    }
+
     @Override
     public String toString()
     {
