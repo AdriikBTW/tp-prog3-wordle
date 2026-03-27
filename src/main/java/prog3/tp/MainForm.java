@@ -16,51 +16,40 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-public class MainForm implements View
-{
+public class MainForm implements View {
     private Presenter presenter;
     private JFrame frame;
     private JLabel guesses[];
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args)
-    {
-        EventQueue.invokeLater(new Runnable() {
-            public void run()
-            {
-                try {
-                    MainForm window = new MainForm();
-                    window.frame.setVisible(true);
-                    Game game = new Game();
-                    new Presenter(game, window);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    /** Launch the application. */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(
+                new Runnable() {
+                    public void run() {
+                        try {
+                            MainForm window = new MainForm();
+                            window.frame.setVisible(true);
+                            Game game = new Game();
+                            new Presenter(game, window);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
-    /**
-     * Create the application.
-     */
-    public MainForm()
-    {
+    /** Create the application. */
+    public MainForm() {
         try {
-            UIManager.setLookAndFeel(
-                    "com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme");
+            UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatOneDarkIJTheme");
         } catch (Exception e) {
             System.out.println("Error setting native look: " + e);
         }
         initialize();
     }
 
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize()
-    {
+    /** Initialize the contents of the frame. */
+    private void initialize() {
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,13 +80,13 @@ public class MainForm implements View
         inputPanel.setLayout(new FlowLayout());
         JTextField inputTextField = new JTextField("", 10);
         JButton submitButton = new JButton("Submit");
-        submitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event)
-            {
-                presenter.newGuess(inputTextField.getText());
-                inputTextField.setText("");
-            }
-        });
+        submitButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        presenter.newGuess(inputTextField.getText());
+                        inputTextField.setText("");
+                    }
+                });
         inputPanel.add(inputTextField);
         inputPanel.add(submitButton);
 
@@ -105,15 +94,12 @@ public class MainForm implements View
     }
 
     @Override
-    public void updateView(List<String> lines)
-    {
-        for (int i = 0; i < lines.size(); i++)
-            guesses[i].setText(lines.get(i));
+    public void updateView(List<String> lines) {
+        for (int i = 0; i < lines.size(); i++) guesses[i].setText(lines.get(i));
     }
 
     @Override
-    public void setPresenter(Presenter presenter)
-    {
+    public void setPresenter(Presenter presenter) {
         this.presenter = presenter;
     }
 }

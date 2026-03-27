@@ -8,8 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class Game implements Model
-{
+public class Game implements Model {
     private List<Guess> _history;
     private List<Observer> _observers;
     private String _secretWord;
@@ -18,15 +17,13 @@ public class Game implements Model
     private final int _MAX_ATTEMPTS = 6;
     private final int _WORD_LEN = 5;
 
-    public Game()
-    {
+    public Game() {
         _history = new ArrayList<>();
         _observers = new ArrayList<>();
         _attempts = 0;
 
         try {
-            _fileLines = Files.readAllLines(
-                    Path.of("src/main/resources/spanish_words.txt"));
+            _fileLines = Files.readAllLines(Path.of("src/main/resources/spanish_words.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,54 +31,43 @@ public class Game implements Model
         _secretWord = getRandomWord();
     }
 
-    public String getRandomWord()
-    {
+    public String getRandomWord() {
         Random rng = new Random();
         return _fileLines.get(rng.nextInt(_fileLines.size()));
     }
 
-    public void addObserver(Observer observer)
-    {
+    public void addObserver(Observer observer) {
         _observers.add(observer);
     }
 
-    private void notifyObservers()
-    {
-        for (Observer observer : _observers)
-            observer.update();
+    private void notifyObservers() {
+        for (Observer observer : _observers) observer.update();
     }
 
-    public boolean isThereAttemptsLeft()
-    {
+    public boolean isThereAttemptsLeft() {
         return _attempts < _MAX_ATTEMPTS;
     }
 
-    public void newGuess(String guess)
-    {
+    public void newGuess(String guess) {
         // NOTE: to throw exception or to not throw exception here
-        if (guess.length() != _WORD_LEN)
-            return;
+        if (guess.length() != _WORD_LEN) return;
 
         guess.toLowerCase();
         LetterStatus status[] = new LetterStatus[_WORD_LEN];
 
         // default all grey
-        for (int i = 0; i < _WORD_LEN; i++)
-            status[i] = LetterStatus.GREY;
+        for (int i = 0; i < _WORD_LEN; i++) status[i] = LetterStatus.GREY;
 
         // green letters
         for (int i = 0; i < _WORD_LEN; i++)
-            if (_secretWord.charAt(i) == guess.charAt(i))
-                status[i] = LetterStatus.GREEN;
+            if (_secretWord.charAt(i) == guess.charAt(i)) status[i] = LetterStatus.GREEN;
 
         // yellow letters
         for (int i = 0; i < _WORD_LEN; i++) {
-            if (status[i] == LetterStatus.GREEN)
-                continue;
+            if (status[i] == LetterStatus.GREEN) continue;
             char letter = guess.charAt(i);
             for (int j = 0; j < _WORD_LEN; j++) {
-                if (i == j)
-                    continue;
+                if (i == j) continue;
                 if (_secretWord.charAt(j) == letter) {
                     status[i] = LetterStatus.YELLOW;
                     break;
@@ -94,19 +80,16 @@ public class Game implements Model
         notifyObservers();
     }
 
-    public List<Guess> getHistory()
-    {
+    public List<Guess> getHistory() {
         List<Guess> cloneHistory = new ArrayList<>();
 
-        for (Guess guess : _history)
-            cloneHistory.add(new Guess(guess));
+        for (Guess guess : _history) cloneHistory.add(new Guess(guess));
 
         return cloneHistory;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         Iterator<Guess> it = _history.iterator();
 

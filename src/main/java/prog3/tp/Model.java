@@ -2,10 +2,12 @@ package prog3.tp;
 
 import java.util.List;
 
-interface Model
-{
+interface Model {
     public void addObserver(Observer observer);
+
     public boolean isThereAttemptsLeft();
+
     public void newGuess(String guess);
+
     public List<Guess> getHistory();
 }

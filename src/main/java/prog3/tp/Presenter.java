@@ -3,13 +3,11 @@ package prog3.tp;
 import java.util.ArrayList;
 import java.util.List;
 
-class Presenter implements Observer
-{
+class Presenter implements Observer {
     private final Model _model;
     private final View _view;
 
-    public Presenter(Model model, View view)
-    {
+    public Presenter(Model model, View view) {
         _model = model;
         _view = view;
 
@@ -17,14 +15,12 @@ class Presenter implements Observer
         _model.addObserver(this);
     }
 
-    public void newGuess(String guess)
-    {
+    public void newGuess(String guess) {
         _model.newGuess(guess);
     }
 
     @Override
-    public void update()
-    {
+    public void update() {
         StringBuilder sb;
         List<Guess> history = _model.getHistory();
         List<String> lines = new ArrayList<>();
@@ -38,8 +34,7 @@ class Presenter implements Observer
                 char c = word.charAt(j);
                 String color = statusToString(status[j]);
 
-                sb.append("<font color=").append(color).append(">").append(c)
-                        .append("</font>");
+                sb.append("<font color=").append(color).append(">").append(c).append("</font>");
             }
             sb.append("</html>");
             lines.add(sb.toString());
@@ -48,8 +43,7 @@ class Presenter implements Observer
         _view.updateView(lines);
     }
 
-    private String statusToString(LetterStatus status)
-    {
+    private String statusToString(LetterStatus status) {
         switch (status) {
             case GREY:
                 return "grey";

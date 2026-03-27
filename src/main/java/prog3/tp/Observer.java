@@ -1,6 +1,5 @@
 package prog3.tp;
 
-interface Observer
-{
+interface Observer {
     void update();
 }
