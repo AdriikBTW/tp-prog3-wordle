@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -71,6 +72,8 @@ public class MainForm implements View {
         for (int i = 0; i < guesses.length; i++) {
             guesses[i] = new JLabel(" ");
             guesses[i].setAlignmentY(Component.CENTER_ALIGNMENT);
+            guesses[i].setFont(new Font("Sans-Serif", Font.PLAIN, 20));
+            guesses[i].setHorizontalAlignment((int) Component.CENTER_ALIGNMENT);
             guessPanel.add(guesses[i]);
         }
 
@@ -90,7 +93,7 @@ public class MainForm implements View {
         inputPanel.add(inputTextField);
         inputPanel.add(submitButton);
 
-        mainPanel.add(inputPanel);
+        marginPanel.add(inputPanel, BorderLayout.SOUTH);
     }
 
     @Override
