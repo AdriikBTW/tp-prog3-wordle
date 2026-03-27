@@ -14,7 +14,14 @@ class Presenter implements Observer
         _model.addObserver(this);
     }
 
+    public void newGuess(String guess)
+    {
+        _model.newGuess(guess);
+    }
+
     @Override
     public void update()
-    {}
+    {
+        _view.updateView(_model.getHistory());
+    }
 }

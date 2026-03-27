@@ -39,9 +39,9 @@ public class Game implements Model
 
     public void newGuess(String guess)
     {
+        // NOTE: to throw exception or to not throw exception here
         if (guess.length() != _WORD_LEN)
-            throw new IllegalArgumentException(
-                    "The string must contain 5 letters");
+            return;
 
         guess.toLowerCase();
         LetterStatus status[] = new LetterStatus[_WORD_LEN];
@@ -70,6 +70,7 @@ public class Game implements Model
             }
         }
 
+        _attempts++;
         _history.add(new Guess(guess, status));
         notifyObservers();
     }

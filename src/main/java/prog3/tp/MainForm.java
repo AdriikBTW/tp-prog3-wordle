@@ -4,19 +4,23 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 
 public class MainForm implements View
 {
     private Presenter presenter;
     private JFrame frame;
+    private JLabel guesses[];
 
     /**
      * Launch the application.
@@ -74,9 +78,9 @@ public class MainForm implements View
         JPanel guessPanel = new JPanel();
         guessPanel.setLayout(new BoxLayout(guessPanel, BoxLayout.Y_AXIS));
 
-        JLabel guesses[] = new JLabel[5];
+        guesses = new JLabel[5];
         for (int i = 0; i < 5; i++) {
-            guesses[i] = new JLabel("label " + i);
+            guesses[i] = new JLabel("");
             guesses[i].setAlignmentY(Component.CENTER_ALIGNMENT);
             guessPanel.add(guesses[i]);
         }
@@ -87,6 +91,13 @@ public class MainForm implements View
         inputPanel.setLayout(new FlowLayout());
         JTextField inputTextField = new JTextField("", 10);
         JButton submitButton = new JButton("Submit");
+        submitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event)
+            {
+                presenter.newGuess(inputTextField.getText());
+                inputTextField.setText("");
+            }
+        });
         inputPanel.add(inputTextField);
         inputPanel.add(submitButton);
 
@@ -94,6 +105,16 @@ public class MainForm implements View
 
         frame.setVisible(true);
 
+    }
+
+    @Override
+    public void updateView(List<Guess> history)
+    {
+        int i = 0;
+        for (Guess guess : history) {
+            guesses[i].setText(guess.getString());
+            i++;
+        }
     }
 
     @Override
