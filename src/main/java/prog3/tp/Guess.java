@@ -11,6 +11,12 @@ public class Guess
         _status = status;
     }
 
+    public Guess(Guess guess)
+    {
+        _guess = guess._guess;
+        _status = guess._status;
+    }
+
     @Override
     public String toString()
     {
