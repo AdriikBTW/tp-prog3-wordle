@@ -5,5 +5,5 @@ import java.util.List;
 interface View
 {
     public void setPresenter(Presenter p);
-    public void updateView(List<Guess> history);
+    public void updateView(List<String> lines);
 }

@@ -102,47 +102,13 @@ public class MainForm implements View
         inputPanel.add(submitButton);
 
         mainPanel.add(inputPanel);
-
-        frame.setVisible(true);
-
     }
 
-    // TODO: is this ok for a mvp? also, it is a complete mess, refactor this shit
     @Override
-    public void updateView(List<Guess> history)
+    public void updateView(List<String> lines)
     {
-        StringBuilder sb;
-        int i = 0;
-        for (Guess guess : history) {
-            String word = guess.getString();
-            LetterStatus status[] = guess.getStatus();
-
-            sb = new StringBuilder("<html>");
-            for (int j = 0; j < word.length(); j++) {
-                char c = word.charAt(j);
-                String color = statusToString(status[j]);
-
-                sb.append("<font color=").append(color).append(">").append(c)
-                        .append("</font>");
-            }
-            sb.append("</html>");
-            guesses[i].setText(sb.toString());
-            i++;
-        }
-    }
-
-    private String statusToString(LetterStatus status)
-    {
-        switch (status) {
-            case GREY:
-                return "grey";
-            case YELLOW:
-                return "yellow";
-            case GREEN:
-                return "green";
-            default:
-                return "";
-        }
+        for (int i = 0; i < lines.size(); i++)
+            guesses[i].setText(lines.get(i));
     }
 
     @Override

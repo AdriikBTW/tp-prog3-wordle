@@ -1,5 +1,8 @@
 package prog3.tp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class Presenter implements Observer
 {
     private final Model _model;
@@ -22,6 +25,40 @@ class Presenter implements Observer
     @Override
     public void update()
     {
-        _view.updateView(_model.getHistory());
+        StringBuilder sb;
+        List<Guess> history = _model.getHistory();
+        List<String> lines = new ArrayList<>();
+
+        for (Guess guess : history) {
+            String word = guess.getString();
+            LetterStatus status[] = guess.getStatus();
+
+            sb = new StringBuilder("<html>");
+            for (int j = 0; j < word.length(); j++) {
+                char c = word.charAt(j);
+                String color = statusToString(status[j]);
+
+                sb.append("<font color=").append(color).append(">").append(c)
+                        .append("</font>");
+            }
+            sb.append("</html>");
+            lines.add(sb.toString());
+        }
+
+        _view.updateView(lines);
+    }
+
+    private String statusToString(LetterStatus status)
+    {
+        switch (status) {
+            case GREY:
+                return "grey";
+            case YELLOW:
+                return "yellow";
+            case GREEN:
+                return "green";
+            default:
+                return "";
+        }
     }
 }
