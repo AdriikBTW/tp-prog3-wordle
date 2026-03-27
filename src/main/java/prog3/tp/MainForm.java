@@ -80,7 +80,7 @@ public class MainForm implements View
 
         guesses = new JLabel[5];
         for (int i = 0; i < 5; i++) {
-            guesses[i] = new JLabel("");
+            guesses[i] = new JLabel(" ");
             guesses[i].setAlignmentY(Component.CENTER_ALIGNMENT);
             guessPanel.add(guesses[i]);
         }
