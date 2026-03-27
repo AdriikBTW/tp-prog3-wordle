@@ -67,8 +67,8 @@ public class MainForm implements View {
         JPanel guessPanel = new JPanel();
         guessPanel.setLayout(new BoxLayout(guessPanel, BoxLayout.Y_AXIS));
 
-        guesses = new JLabel[5];
-        for (int i = 0; i < 5; i++) {
+        guesses = new JLabel[6];
+        for (int i = 0; i < guesses.length; i++) {
             guesses[i] = new JLabel(" ");
             guesses[i].setAlignmentY(Component.CENTER_ALIGNMENT);
             guessPanel.add(guesses[i]);

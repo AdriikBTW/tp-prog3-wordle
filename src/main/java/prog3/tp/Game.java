@@ -51,6 +51,7 @@ public class Game implements Model {
     public void newGuess(String guess) {
         // NOTE: to throw exception or to not throw exception here
         if (guess.length() != _WORD_LEN) return;
+        if (!isThereAttemptsLeft()) return;
 
         guess.toLowerCase();
         LetterStatus status[] = new LetterStatus[_WORD_LEN];
