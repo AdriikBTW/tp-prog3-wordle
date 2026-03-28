@@ -26,7 +26,7 @@ class Presenter implements Observer {
         List<String> lines = new ArrayList<>();
 
         for (Guess guess : history) {
-            String word = guess.getString();
+            String word = guess.getString().toUpperCase();
             LetterStatus status[] = guess.getStatus();
 
             sb = new StringBuilder("<html>");
