@@ -28,7 +28,7 @@ public class Game implements Model {
             e.printStackTrace();
         }
 
-        _secretWord = getRandomWord();
+        _secretWord = getRandomWord().toLowerCase();
     }
 
     public String getRandomWord() {
@@ -49,28 +49,30 @@ public class Game implements Model {
     }
 
     public void newGuess(String guess) {
-        // NOTE: to throw exception or to not throw exception here
         if (guess.length() != _WORD_LEN) return;
         if (!isThereAttemptsLeft()) return;
 
-        guess.toLowerCase();
+        guess = guess.toLowerCase();
         LetterStatus status[] = new LetterStatus[_WORD_LEN];
+        boolean isLetterUsed[] = new boolean[_WORD_LEN];
 
         // default all grey
         for (int i = 0; i < _WORD_LEN; i++) status[i] = LetterStatus.GREY;
 
         // green letters
         for (int i = 0; i < _WORD_LEN; i++)
-            if (_secretWord.charAt(i) == guess.charAt(i)) status[i] = LetterStatus.GREEN;
+            if (_secretWord.charAt(i) == guess.charAt(i)) {
+                status[i] = LetterStatus.GREEN;
+                isLetterUsed[i] = true;
+            }
 
         // yellow letters
         for (int i = 0; i < _WORD_LEN; i++) {
             if (status[i] == LetterStatus.GREEN) continue;
-            char letter = guess.charAt(i);
             for (int j = 0; j < _WORD_LEN; j++) {
-                if (i == j) continue;
-                if (_secretWord.charAt(j) == letter) {
+                if (!isLetterUsed[j] && _secretWord.charAt(j) == guess.charAt(i)) {
                     status[i] = LetterStatus.YELLOW;
+                    isLetterUsed[j] = true;
                     break;
                 }
             }
