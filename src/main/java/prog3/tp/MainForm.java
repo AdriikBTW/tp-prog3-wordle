@@ -21,6 +21,8 @@ public class MainForm implements View {
     private Presenter presenter;
     private JFrame frame;
     private JLabel guesses[];
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
 
     /** Launch the application. */
     public static void main(String[] args) {
@@ -52,7 +54,7 @@ public class MainForm implements View {
     /** Initialize the contents of the frame. */
     private void initialize() {
         frame = new JFrame();
-        frame.setBounds(100, 100, 450, 300);
+        frame.setBounds(100, 100, WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
