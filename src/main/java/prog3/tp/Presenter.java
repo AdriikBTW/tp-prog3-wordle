@@ -45,7 +45,7 @@ class Presenter implements Observer {
 
     private String statusToString(LetterStatus status) {
         switch (status) {
-            case GREY:
+            case GRAY:
                 return "gray";
             case YELLOW:
                 return "yellow";

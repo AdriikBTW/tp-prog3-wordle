@@ -57,7 +57,7 @@ public class Game implements Model {
         boolean isLetterUsed[] = new boolean[_WORD_LEN];
 
         // default all grey
-        for (int i = 0; i < _WORD_LEN; i++) status[i] = LetterStatus.GREY;
+        for (int i = 0; i < _WORD_LEN; i++) status[i] = LetterStatus.GRAY;
 
         // green letters
         for (int i = 0; i < _WORD_LEN; i++)

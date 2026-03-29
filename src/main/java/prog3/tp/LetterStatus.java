@@ -1,7 +1,7 @@
 package prog3.tp;
 
 enum LetterStatus {
-    GREY,
+    GRAY,
     YELLOW,
     GREEN
 };
