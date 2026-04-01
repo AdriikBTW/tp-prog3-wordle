@@ -1,10 +1,12 @@
 package prog3.tp;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -25,7 +27,7 @@ public class MainForm implements View {
     private JPanel _infoPanel;
     private JPanel _guessPanel;
     private JPanel _inputPanel;
-    private JLabel _guesses[];
+    private JLabel[][] _guess_grid;
     private JLabel _attempts;
     private static final int POS_X = 100;
     private static final int POS_Y = 100;
@@ -103,16 +105,27 @@ public class MainForm implements View {
     }
 
     private void setUpGuessPanel() {
-        _guessPanel = new JPanel();
-        _guessPanel.setLayout(new BoxLayout(_guessPanel, BoxLayout.Y_AXIS));
+        // TODO: make the grid layout to not scale with the window so it doesnt look so weird
+        int rows = 6;
+        int cols = 5;
+        int hgap = 5;
+        int vgap = 5;
 
-        _guesses = new JLabel[6];
-        for (int i = 0; i < _guesses.length; i++) {
-            _guesses[i] = new JLabel(" ");
-            _guesses[i].setAlignmentY(Component.CENTER_ALIGNMENT);
-            _guesses[i].setFont(new Font("Sans-Serif", Font.PLAIN, 20));
-            _guesses[i].setHorizontalAlignment((int) Component.CENTER_ALIGNMENT);
-            _guessPanel.add(_guesses[i]);
+        _guessPanel = new JPanel();
+        _guessPanel.setLayout(new GridLayout(rows, cols, hgap, vgap));
+
+        _guess_grid = new JLabel[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                JLabel label = new JLabel("", (int) Component.CENTER_ALIGNMENT);
+                label.setFont(new Font("Sans-Serif", Font.BOLD, 20));
+                label.setOpaque(true);
+                label.setBackground(Color.DARK_GRAY);
+                label.setForeground(Color.WHITE);
+
+                _guess_grid[i][j] = label;
+                _guessPanel.add(label);
+            }
         }
     }
 
@@ -133,9 +146,33 @@ public class MainForm implements View {
     }
 
     @Override
-    public void updateView(List<String> lines, Integer attempts) {
-        for (int i = 0; i < lines.size(); i++) _guesses[i].setText(lines.get(i));
-        this._attempts.setText("Attempts: " + attempts.toString() + "/6");
+    public void updateView(List<Guess> history, Integer attempts) {
+        // NOTE: i dont know if this is correct. should the view apply logic to control the ui?
+        for (int i = 0; i < history.size(); i++) {
+            Guess guess = history.get(i);
+            String word = guess.getString().toUpperCase();
+            LetterStatus[] status = guess.getStatus();
+
+            for (int j = 0; j < word.length(); j++) {
+                _guess_grid[i][j].setText(String.valueOf(word.charAt(j)));
+                _guess_grid[i][j].setBackground(statusToString(status[j]));
+            }
+        }
+
+        _attempts.setText("Attempts: " + attempts.toString() + "/6");
+    }
+
+    private Color statusToString(LetterStatus status) {
+        switch (status) {
+            case GRAY:
+                return new Color(60, 60, 60);
+            case YELLOW:
+                return new Color(180, 160, 60);
+            case GREEN:
+                return new Color(80, 140, 78);
+            default:
+                return Color.BLACK;
+        }
     }
 
     @Override
