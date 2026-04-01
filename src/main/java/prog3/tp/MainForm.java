@@ -31,7 +31,7 @@ public class MainForm implements View {
     private JLabel _attempts;
     private static final int POS_X = 100;
     private static final int POS_Y = 100;
-    private static final int WIDTH = 800;
+    private static final int WIDTH = 600;
     private static final int HEIGHT = 600;
 
     /** Launch the application. */
