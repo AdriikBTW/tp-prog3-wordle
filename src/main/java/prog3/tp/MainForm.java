@@ -18,7 +18,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 public class MainForm implements View {
-    private Presenter presenter;
+    private Presenter _presenter;
     private JFrame _frame;
     private JPanel _marginPanel;
     private JPanel _mainPanel;
@@ -26,7 +26,7 @@ public class MainForm implements View {
     private JPanel _guessPanel;
     private JPanel _inputPanel;
     private JLabel _guesses[];
-    private JLabel attempts;
+    private JLabel _attempts;
     private static final int POS_X = 100;
     private static final int POS_Y = 100;
     private static final int WIDTH = 800;
@@ -96,9 +96,9 @@ public class MainForm implements View {
     private void setUpInfoPanel() {
         _infoPanel = new JPanel();
         _infoPanel.setLayout(new FlowLayout());
-        attempts = new JLabel("Attempts: 0/6");
+        _attempts = new JLabel("Attempts: 0/6");
         JLabel time = new JLabel("Time: 00");
-        _infoPanel.add(attempts);
+        _infoPanel.add(_attempts);
         _infoPanel.add(time);
     }
 
@@ -124,7 +124,7 @@ public class MainForm implements View {
         submitButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
-                        presenter.newGuess(inputTextField.getText());
+                        _presenter.newGuess(inputTextField.getText());
                         inputTextField.setText("");
                     }
                 });
@@ -135,11 +135,11 @@ public class MainForm implements View {
     @Override
     public void updateView(List<String> lines, Integer attempts) {
         for (int i = 0; i < lines.size(); i++) _guesses[i].setText(lines.get(i));
-        this.attempts.setText("Attempts: " + attempts.toString() + "/6");
+        this._attempts.setText("Attempts: " + attempts.toString() + "/6");
     }
 
     @Override
     public void setPresenter(Presenter presenter) {
-        this.presenter = presenter;
+        _presenter = presenter;
     }
 }
