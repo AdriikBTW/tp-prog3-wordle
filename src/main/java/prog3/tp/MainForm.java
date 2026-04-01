@@ -19,9 +19,16 @@ import javax.swing.border.EmptyBorder;
 
 public class MainForm implements View {
     private Presenter presenter;
-    private JFrame frame;
-    private JLabel guesses[];
+    private JFrame _frame;
+    private JPanel _marginPanel;
+    private JPanel _mainPanel;
+    private JPanel _infoPanel;
+    private JPanel _guessPanel;
+    private JPanel _inputPanel;
+    private JLabel _guesses[];
     private JLabel attempts;
+    private static final int POS_X = 100;
+    private static final int POS_Y = 100;
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
 
@@ -32,7 +39,7 @@ public class MainForm implements View {
                     public void run() {
                         try {
                             MainForm window = new MainForm();
-                            window.frame.setVisible(true);
+                            window._frame.setVisible(true);
                             Game game = new Game();
                             new Presenter(game, window);
                         } catch (Exception e) {
@@ -54,45 +61,64 @@ public class MainForm implements View {
 
     /** Initialize the contents of the frame. */
     private void initialize() {
-        // TODO: refactor this function in small private functions
-        frame = new JFrame();
-        frame.setBounds(100, 100, WIDTH, HEIGHT);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+        setUpFrame();
+        setUpMarginPanel();
+        setUpMainPanel();
+        setUpInfoPanel();
+        setUpGuessPanel();
+        setUpInputPanel();
 
-        JPanel marginPanel = new JPanel();
-        marginPanel.setLayout(new BorderLayout());
-        marginPanel.setBorder(new EmptyBorder(50, 50, 50, 50));
-        frame.add(marginPanel, BorderLayout.CENTER);
+        _frame.add(_marginPanel, BorderLayout.CENTER);
+        _marginPanel.add(_infoPanel, BorderLayout.NORTH);
+        _marginPanel.add(_mainPanel, BorderLayout.CENTER);
+        _mainPanel.add(_guessPanel);
+        _marginPanel.add(_inputPanel, BorderLayout.SOUTH);
+    }
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        marginPanel.add(mainPanel, BorderLayout.CENTER);
+    private void setUpFrame() {
+        _frame = new JFrame();
+        _frame.setBounds(POS_X, POS_Y, WIDTH, HEIGHT);
+        _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        _frame.setLayout(new BorderLayout());
+    }
 
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new FlowLayout());
+    private void setUpMarginPanel() {
+        _marginPanel = new JPanel();
+        _marginPanel.setLayout(new BorderLayout());
+        _marginPanel.setBorder(new EmptyBorder(50, 50, 50, 50));
+    }
+
+    private void setUpMainPanel() {
+        _mainPanel = new JPanel();
+        _mainPanel.setLayout(new BoxLayout(_mainPanel, BoxLayout.Y_AXIS));
+    }
+
+    private void setUpInfoPanel() {
+        _infoPanel = new JPanel();
+        _infoPanel.setLayout(new FlowLayout());
         attempts = new JLabel("Attempts: 0/6");
         JLabel time = new JLabel("Time: 00");
-        infoPanel.add(attempts);
-        infoPanel.add(time);
-        marginPanel.add(infoPanel, BorderLayout.NORTH);
+        _infoPanel.add(attempts);
+        _infoPanel.add(time);
+    }
 
-        JPanel guessPanel = new JPanel();
-        guessPanel.setLayout(new BoxLayout(guessPanel, BoxLayout.Y_AXIS));
+    private void setUpGuessPanel() {
+        _guessPanel = new JPanel();
+        _guessPanel.setLayout(new BoxLayout(_guessPanel, BoxLayout.Y_AXIS));
 
-        guesses = new JLabel[6];
-        for (int i = 0; i < guesses.length; i++) {
-            guesses[i] = new JLabel(" ");
-            guesses[i].setAlignmentY(Component.CENTER_ALIGNMENT);
-            guesses[i].setFont(new Font("Sans-Serif", Font.PLAIN, 20));
-            guesses[i].setHorizontalAlignment((int) Component.CENTER_ALIGNMENT);
-            guessPanel.add(guesses[i]);
+        _guesses = new JLabel[6];
+        for (int i = 0; i < _guesses.length; i++) {
+            _guesses[i] = new JLabel(" ");
+            _guesses[i].setAlignmentY(Component.CENTER_ALIGNMENT);
+            _guesses[i].setFont(new Font("Sans-Serif", Font.PLAIN, 20));
+            _guesses[i].setHorizontalAlignment((int) Component.CENTER_ALIGNMENT);
+            _guessPanel.add(_guesses[i]);
         }
+    }
 
-        mainPanel.add(guessPanel);
-
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new FlowLayout());
+    private void setUpInputPanel() {
+        _inputPanel = new JPanel();
+        _inputPanel.setLayout(new FlowLayout());
         JTextField inputTextField = new JTextField("", 10);
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(
@@ -102,15 +128,13 @@ public class MainForm implements View {
                         inputTextField.setText("");
                     }
                 });
-        inputPanel.add(inputTextField);
-        inputPanel.add(submitButton);
-
-        marginPanel.add(inputPanel, BorderLayout.SOUTH);
+        _inputPanel.add(inputTextField);
+        _inputPanel.add(submitButton);
     }
 
     @Override
     public void updateView(List<String> lines, Integer attempts) {
-        for (int i = 0; i < lines.size(); i++) guesses[i].setText(lines.get(i));
+        for (int i = 0; i < lines.size(); i++) _guesses[i].setText(lines.get(i));
         this.attempts.setText("Attempts: " + attempts.toString() + "/6");
     }
 
