@@ -10,4 +10,6 @@ interface Model {
     public void newGuess(String guess);
 
     public List<Guess> getHistory();
+
+    public Integer getAttempts();
 }

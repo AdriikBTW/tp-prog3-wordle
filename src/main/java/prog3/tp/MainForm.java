@@ -21,6 +21,7 @@ public class MainForm implements View {
     private Presenter presenter;
     private JFrame frame;
     private JLabel guesses[];
+    private JLabel attempts;
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
 
@@ -53,6 +54,7 @@ public class MainForm implements View {
 
     /** Initialize the contents of the frame. */
     private void initialize() {
+        // TODO: refactor this function in small private functions
         frame = new JFrame();
         frame.setBounds(100, 100, WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,6 +68,14 @@ public class MainForm implements View {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         marginPanel.add(mainPanel, BorderLayout.CENTER);
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new FlowLayout());
+        attempts = new JLabel("Attempts: 0/6");
+        JLabel time = new JLabel("Time: 00");
+        infoPanel.add(attempts);
+        infoPanel.add(time);
+        marginPanel.add(infoPanel, BorderLayout.NORTH);
 
         JPanel guessPanel = new JPanel();
         guessPanel.setLayout(new BoxLayout(guessPanel, BoxLayout.Y_AXIS));
@@ -99,8 +109,9 @@ public class MainForm implements View {
     }
 
     @Override
-    public void updateView(List<String> lines) {
+    public void updateView(List<String> lines, Integer attempts) {
         for (int i = 0; i < lines.size(); i++) guesses[i].setText(lines.get(i));
+        this.attempts.setText("Attempts: " + attempts.toString() + "/6");
     }
 
     @Override

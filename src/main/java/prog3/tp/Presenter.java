@@ -40,7 +40,7 @@ class Presenter implements Observer {
             lines.add(sb.toString());
         }
 
-        _view.updateView(lines);
+        _view.updateView(lines, _model.getAttempts());
     }
 
     private String statusToString(LetterStatus status) {

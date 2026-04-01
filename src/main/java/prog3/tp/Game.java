@@ -91,6 +91,10 @@ public class Game implements Model {
         return cloneHistory;
     }
 
+    public Integer getAttempts() {
+        return _attempts;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
