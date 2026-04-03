@@ -20,4 +20,21 @@ class Presenter implements Observer {
     public void update() {
         _view.updateView(_model.getHistory(), _model.getAttempts());
     }
+
+	public void checkGameStatus(String guess) {
+		int status = _model.checkGameStatus(guess);
+		
+		switch(status) {
+			case 0:
+				_view.showWinMessage();
+				break;
+			
+			case 1: 
+				_view.showLoseMessage();
+				break;
+				
+		}
+		
+		
+	}
 }

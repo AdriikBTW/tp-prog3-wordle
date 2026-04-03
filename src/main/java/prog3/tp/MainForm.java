@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -179,12 +180,22 @@ public class MainForm implements View {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
                         _presenter.newGuess(inputTextField.getText());
+                        _presenter.checkGameStatus(inputTextField.getText());
                         inputTextField.setText("");
                     }
                 });
         _inputPanel.add(inputTextField);
         _inputPanel.add(submitButton);
     }
+    
+	public void showWinMessage() {
+		JOptionPane.showMessageDialog(null, "Ganaste, Eres un crack");
+	}
+	
+	public void showLoseMessage() {
+	    JOptionPane.showMessageDialog(null, "Perdiste, vuelve a intentarlo");
+	}
+
 
     @Override
     public void updateView(List<Guess> history, Integer attempts) {

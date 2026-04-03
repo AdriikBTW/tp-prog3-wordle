@@ -94,6 +94,19 @@ public class Game implements Model {
     public Integer getAttempts() {
         return _attempts;
     }
+    
+    public int checkGameStatus(String guess) {
+    	if(guess.equals(this._secretWord)) {
+    		return 	0;
+    	}
+    	if(!isThereAttemptsLeft() && guess.equals(this._secretWord)) {
+    		return 0;
+    	}
+    	if(!isThereAttemptsLeft() && !guess.equals(this._secretWord)) {
+    		return 1;
+    	}
+    	else return 2;
+    }
 
     @Override
     public String toString() {

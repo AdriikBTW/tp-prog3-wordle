@@ -12,4 +12,6 @@ interface Model {
     public List<Guess> getHistory();
 
     public Integer getAttempts();
+
+	public int checkGameStatus(String guess);
 }
