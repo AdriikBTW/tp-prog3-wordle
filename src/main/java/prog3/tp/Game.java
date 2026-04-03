@@ -2,7 +2,7 @@ package prog3.tp;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,9 +23,9 @@ public class Game implements Model {
         _attempts = 0;
 
         try {
-            _fileLines = Files.readAllLines(Path.of("src/main/resources/spanish_words.txt"));
+            _fileLines = Files.readAllLines(Paths.get("src/main/resources/spanish_words.txt"));
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();	
         }
 
         _secretWord = getRandomWord().toLowerCase();
