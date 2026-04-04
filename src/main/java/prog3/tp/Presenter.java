@@ -1,5 +1,7 @@
 package prog3.tp;
 
+import java.util.List;
+
 class Presenter implements Observer {
     private final Model _model;
     private final View _view;
@@ -18,7 +20,17 @@ class Presenter implements Observer {
 
     @Override
     public void update() {
-        _view.updateView(_model.getHistory(), _model.getAttempts());
+        // NOTE: really is all this better than just passing Guess to view?
+        List<Guess> history = _model.getHistory();
+        String[] words = new String[history.size()];
+        LetterStatus[][] statusList = new LetterStatus[history.size()][];
+
+        for (int i = 0; i < words.length; i++) {
+            words[i] = history.get(i).getString();
+            statusList[i] = history.get(i).getStatus();
+        }
+
+        _view.updateView(words, statusList, _model.getAttempts());
     }
 
 	public void checkGameStatus(String guess) {

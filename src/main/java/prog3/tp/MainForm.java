@@ -10,7 +10,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -198,12 +197,10 @@ public class MainForm implements View {
 
 
     @Override
-    public void updateView(List<Guess> history, Integer attempts) {
-        // NOTE: i dont know if this is correct. should the view apply logic to control the ui?
-        for (int i = 0; i < history.size(); i++) {
-            Guess guess = history.get(i);
-            String word = guess.getString().toUpperCase();
-            LetterStatus[] status = guess.getStatus();
+    public void updateView(String[] words, LetterStatus[][] statusList, Integer attempts) {
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i].toUpperCase();
+            LetterStatus[] status = statusList[i];
 
             for (int j = 0; j < word.length(); j++) {
                 _guess_grid[i][j].setText(String.valueOf(word.charAt(j)));
