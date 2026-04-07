@@ -188,11 +188,47 @@ public class MainForm implements View {
     }
     
 	public void showWinMessage() {
-		JOptionPane.showMessageDialog(null, "Ganaste, Eres un crack");
+		Object[] opciones = {"Reintentar", "Cerrar"};
+		
+		int selecction = JOptionPane.showOptionDialog(
+		        null,
+		        "Has ganado, ¿Qué querés hacer?",
+		        "Fin del juego",
+		        JOptionPane.YES_NO_OPTION,
+		        JOptionPane.QUESTION_MESSAGE,
+		        null,
+		        opciones,
+		        opciones[0]
+		);
+
+		if(selecction == 0) {
+			cleanScreen();
+			_presenter.restartGame();
+		} else {
+			System.exit(0);
+		}
 	}
 	
 	public void showLoseMessage() {
-	    JOptionPane.showMessageDialog(null, "Perdiste, vuelve a intentarlo");
+		Object[] opciones = {"Reintentar", "Cerrar"};
+		
+		int selecction = JOptionPane.showOptionDialog(
+		        null,
+		        "Perdido, ¿Qué querés hacer?",
+		        "Fin del juego",
+		        JOptionPane.YES_NO_OPTION,
+		        JOptionPane.QUESTION_MESSAGE,
+		        null,
+		        opciones,
+		        opciones[0]
+		);
+
+		if(selecction == 0) {
+			cleanScreen();
+			_presenter.restartGame();
+		} else {
+			System.exit(0);
+		};
 	}
 
 
@@ -231,6 +267,21 @@ public class MainForm implements View {
         }
     }
     
+    public void cleanScreen() {
+    	    for (int i = 0; i < _guess_grid.length; i++) {
+    	        for (int j = 0; j < _guess_grid[i].length; j++) {
+    	            _guess_grid[i][j].setText("");
+    	            _guess_grid[i][j].setBackground(Color.DARK_GRAY);
+    	        }
+    	    }
+
+    	    for (int i = 0; i < _alphabet_grid.length; i++) {
+    	        _alphabet_grid[i].setBackground(Color.LIGHT_GRAY);
+    	    }
+
+    	    _attempts.setText("Attempts: 0/6");
+
+    }
 
     @Override
     public void setPresenter(Presenter presenter) {

@@ -99,14 +99,25 @@ public class Game implements Model {
     	if(guess.equals(this._secretWord)) {
     		return 	0;
     	}
-    	if(!isThereAttemptsLeft() && guess.equals(this._secretWord)) {
-    		return 0;
-    	}
-    	if(!isThereAttemptsLeft() && !guess.equals(this._secretWord)) {
+    	if(!isThereAttemptsLeft()) {
     		return 1;
     	}
     	else return 2;
     }
+    
+    public void restart() {
+   	 _attempts = 0;
+     _history = new ArrayList<>();
+
+        try {
+            _fileLines = Files.readAllLines(Paths.get("src/main/resources/spanish_words.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();	
+        }
+
+        _secretWord = getRandomWord().toLowerCase();
+        notifyObservers();
+   }
 
     @Override
     public String toString() {

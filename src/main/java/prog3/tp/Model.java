@@ -14,4 +14,6 @@ interface Model {
     public Integer getAttempts();
 
 	public int checkGameStatus(String guess);
+
+	public void restart();
 }

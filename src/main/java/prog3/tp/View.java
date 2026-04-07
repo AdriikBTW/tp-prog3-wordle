@@ -8,4 +8,6 @@ interface View {
 	public void showWinMessage();
 
 	public void showLoseMessage();
+
+	public void cleanScreen();
 }

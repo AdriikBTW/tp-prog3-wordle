@@ -46,7 +46,9 @@ class Presenter implements Observer {
 				break;
 				
 		}
-		
-		
+	}
+	
+	public void restartGame() {
+		_model.restart();
 	}
 }
