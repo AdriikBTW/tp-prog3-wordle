@@ -205,8 +205,8 @@ public class MainForm implements View {
 		);
 
 		if(selecction == 0) {
-			cleanScreen();
 			_presenter.restartGame();
+			cleanScreen();
 		} else {
 			System.exit(0);
 		}
@@ -227,8 +227,8 @@ public class MainForm implements View {
 		);
 
 		if(selecction == 0) {
-			cleanScreen();
 			_presenter.restartGame();
+			cleanScreen();
 		} else {
 			System.exit(0);
 		};
@@ -289,6 +289,7 @@ public class MainForm implements View {
     	    }
 
     	    _attempts.setText("Attempts: 0/6");
+    	    _timerLabel.setText("Time: 00:00");
 
     }
 

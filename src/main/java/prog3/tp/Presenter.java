@@ -62,20 +62,19 @@ class Presenter implements Observer {
 		
 		switch(status) {
 			case 0:
-				_view.showWinMessage();
 				stopTimer();
+				_view.showWinMessage();
 				break;
 			
 			case 1: 
-				_view.showLoseMessage();
 				stopTimer();
+				_view.showLoseMessage();
 				break;
 				
 		}
 	}
 	
 	public void restartGame() {
-		stopTimer();
 		_model.restart();
 		startTimer();
 	}
