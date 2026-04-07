@@ -16,4 +16,8 @@ interface Model {
 	public int checkGameStatus(String guess);
 
 	public void restart();
+
+	public int getTime();
+
+	public void setTime(int i);
 }

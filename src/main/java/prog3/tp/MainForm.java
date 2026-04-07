@@ -31,6 +31,7 @@ public class MainForm implements View {
     private JPanel _inputPanel;
     private JLabel[][] _guess_grid;
     private JLabel _attempts;
+    private JLabel _timerLabel;
     private static final int POS_X = 100;
     private static final int POS_Y = 100;
     private static final int WIDTH = 600;
@@ -82,6 +83,8 @@ public class MainForm implements View {
         _marginPanel.add(_inputPanel, BorderLayout.SOUTH);
         _mainPanel.add(_guessPanel);
         _mainPanel.add(_alphabetPanel);
+        
+        
     }
 
     private void setUpFrame() {
@@ -107,9 +110,9 @@ public class MainForm implements View {
         _infoPanel.setLayout(new FlowLayout());
         _infoPanel.setBorder(new EmptyBorder(0,0,50,0));
         _attempts = new JLabel("Attempts: 0/6");
-        JLabel time = new JLabel("Time: 00");
+        _timerLabel = new JLabel("Time: 00:00");
         _infoPanel.add(_attempts);
-        _infoPanel.add(time);
+        _infoPanel.add(_timerLabel);
     }
 
     private void setUpGuessPanel() {
@@ -214,7 +217,7 @@ public class MainForm implements View {
 		
 		int selecction = JOptionPane.showOptionDialog(
 		        null,
-		        "Perdido, ¿Qué querés hacer?",
+		        "Perdiste, ¿Qué querés hacer?",
 		        "Fin del juego",
 		        JOptionPane.YES_NO_OPTION,
 		        JOptionPane.QUESTION_MESSAGE,
@@ -233,7 +236,7 @@ public class MainForm implements View {
 
 
     @Override
-    public void updateView(String[] words, LetterStatus[][] statusList, Integer attempts) {
+    public void updateView(String[] words, LetterStatus[][] statusList, Integer attempts, Integer time) {
         for (int i = 0; i < words.length; i++) {
             String word = words[i].toUpperCase();
             LetterStatus[] status = statusList[i];
@@ -252,6 +255,12 @@ public class MainForm implements View {
         }
 
         _attempts.setText("Attempts: " + attempts.toString() + "/6");
+        
+        int seconds = time % 60;
+        int minutes = time / 60;
+
+        String formatted = String.format("%02d:%02d", minutes, seconds);
+        _timerLabel.setText("Time: " + formatted);
     }
 
     private Color statusToString(LetterStatus status) {

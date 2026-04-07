@@ -1,10 +1,14 @@
 package prog3.tp;
 
 import java.util.List;
+import javax.swing.Timer;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 class Presenter implements Observer {
     private final Model _model;
     private final View _view;
+    private Timer _timer;
 
     public Presenter(Model model, View view) {
         _model = model;
@@ -12,9 +16,29 @@ class Presenter implements Observer {
 
         _view.setPresenter(this);
         _model.addObserver(this);
+        
+        startTimer();
     }
 
-    public void newGuess(String guess) {
+    private void startTimer() {
+		_timer = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e ) {
+					int time = _model.getTime();
+					_model.setTime(time+1);
+					update();
+			}
+		}); 
+		_timer.start();
+		
+	}
+    
+    public void stopTimer() {
+    	if (_timer != null) {
+    		_timer.stop();
+    	}
+    };
+
+	public void newGuess(String guess) {
         _model.newGuess(guess);
     }
 
@@ -30,7 +54,7 @@ class Presenter implements Observer {
             statusList[i] = history.get(i).getStatus();
         }
 
-        _view.updateView(words, statusList, _model.getAttempts());
+        _view.updateView(words, statusList, _model.getAttempts(), _model.getTime());        
     }
 
 	public void checkGameStatus(String guess) {
@@ -39,16 +63,20 @@ class Presenter implements Observer {
 		switch(status) {
 			case 0:
 				_view.showWinMessage();
+				stopTimer();
 				break;
 			
 			case 1: 
 				_view.showLoseMessage();
+				stopTimer();
 				break;
 				
 		}
 	}
 	
 	public void restartGame() {
+		stopTimer();
 		_model.restart();
+		startTimer();
 	}
 }

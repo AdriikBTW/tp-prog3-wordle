@@ -16,22 +16,26 @@ public class Game implements Model {
     private List<String> _fileLines;
     private final int _MAX_ATTEMPTS = 6;
     private final int _WORD_LEN = 5;
+    private int _time;
 
     public Game() {
         _history = new ArrayList<>();
         _observers = new ArrayList<>();
         _attempts = 0;
+        
 
         try {
             _fileLines = Files.readAllLines(Paths.get("src/main/resources/spanish_words.txt"));
         } catch (IOException e) {
             e.printStackTrace();	
         }
-
+        
         _secretWord = getRandomWord().toLowerCase();
     }
 
-    public String getRandomWord() {
+
+
+	public String getRandomWord() {
         Random rng = new Random();
         return _fileLines.get(rng.nextInt(_fileLines.size()));
     }
@@ -108,6 +112,7 @@ public class Game implements Model {
     public void restart() {
    	 _attempts = 0;
      _history = new ArrayList<>();
+     _time = 0;
 
         try {
             _fileLines = Files.readAllLines(Paths.get("src/main/resources/spanish_words.txt"));
@@ -117,7 +122,17 @@ public class Game implements Model {
 
         _secretWord = getRandomWord().toLowerCase();
         notifyObservers();
+       
    }
+    
+    public void setTime(int time) {
+    	this._time = time;
+    	notifyObservers();
+    }
+    
+    public int getTime() {
+    	return _time;
+    }
 
     @Override
     public String toString() {
