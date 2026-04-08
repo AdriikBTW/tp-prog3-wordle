@@ -56,6 +56,8 @@ public class Game implements Model {
         if (guess.length() != _WORD_LEN) return;
         if (!isThereAttemptsLeft()) return;
 
+        if (!_fileLines.contains(guess.toLowerCase())) return;
+        
         guess = guess.toLowerCase();
         LetterStatus status[] = new LetterStatus[_WORD_LEN];
         boolean isLetterUsed[] = new boolean[_WORD_LEN];
