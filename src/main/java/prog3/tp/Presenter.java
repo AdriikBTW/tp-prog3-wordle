@@ -16,11 +16,9 @@ class Presenter implements Observer {
 
         _view.setPresenter(this);
         _model.addObserver(this);
-
-        startTimer();
     }
 
-    private void startTimer() {
+    public void startTimer() {
         _timer =
                 new Timer(
                         1000,

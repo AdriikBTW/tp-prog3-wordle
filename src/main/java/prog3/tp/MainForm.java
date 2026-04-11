@@ -115,6 +115,7 @@ public class MainForm implements View {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
                         _cardLayout.show(_marginPanel, "game");
+                        _presenter.startTimer();
                     }
                 });
     }
