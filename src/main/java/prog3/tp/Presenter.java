@@ -44,7 +44,16 @@ class Presenter implements Observer {
 
     @Override
     public void update() {
-        // NOTE: really is all this better than just passing Guess to view?
+        if (_model instanceof Game) {
+            Game game = (Game) _model;
+            if (game.getLastErrorMessage() != null) {
+                _view.showErrorMessage(game.getLastErrorMessage());
+                game.clearLastErrorMessage(); // limpiar después de mostrar
+                return;
+            }
+        }
+    	
+    	// NOTE: really is all this better than just passing Guess to view?
         List<Guess> history = _model.getHistory();
         String[] words = new String[history.size()];
         LetterStatus[][] statusList = new LetterStatus[history.size()][];
@@ -67,10 +76,13 @@ class Presenter implements Observer {
 				break;
 			
 			case 1: 
-				stopTimer();
-				_view.showLoseMessage();
-				break;
-				
+			
+			    stopTimer();
+			    if (_model instanceof Game) {
+			        Game game = (Game) _model;
+			        _view.showLoseMessage(game.getSecretWord());
+			    }
+			    break;
 		}
 	}
 	

@@ -116,7 +116,7 @@ public class MainForm implements View {
     }
 
     private void setUpGuessPanel() {
-        // TODO: make the grid layout to not scale with the window so it doesnt look so weird
+
         int rows = 6;
         int cols = 5;
         int hgap = 2;
@@ -212,26 +212,26 @@ public class MainForm implements View {
 		}
 	}
 	
-	public void showLoseMessage() {
-		Object[] opciones = {"Reintentar", "Cerrar"};
-		
-		int selecction = JOptionPane.showOptionDialog(
-		        null,
-		        "Perdiste, ¿Qué querés hacer?",
-		        "Fin del juego",
-		        JOptionPane.YES_NO_OPTION,
-		        JOptionPane.QUESTION_MESSAGE,
-		        null,
-		        opciones,
-		        opciones[0]
-		);
+	public void showLoseMessage(String secretWord) {
+	    Object[] opciones = {"Reintentar", "Cerrar"};
 
-		if(selecction == 0) {
-			_presenter.restartGame();
-			cleanScreen();
-		} else {
-			System.exit(0);
-		};
+	    int selecction = JOptionPane.showOptionDialog(
+	        null,
+	        "Perdiste. La palabra era: " + secretWord + "\n¿Qué querés hacer?",
+	        "Fin del juego",
+	        JOptionPane.YES_NO_OPTION,
+	        JOptionPane.QUESTION_MESSAGE,
+	        null,
+	        opciones,
+	        opciones[0]
+	    );
+
+	    if(selecction == 0) {
+	        _presenter.restartGame();
+	        cleanScreen();
+	    } else {
+	        System.exit(0);
+	    }
 	}
 
 
@@ -296,5 +296,14 @@ public class MainForm implements View {
     @Override
     public void setPresenter(Presenter presenter) {
         _presenter = presenter;
+    }
+    
+    public void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(
+            _frame,
+            message,
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
     }
 }

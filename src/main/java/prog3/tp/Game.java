@@ -17,7 +17,8 @@ public class Game implements Model {
     private final int _MAX_ATTEMPTS = 6;
     private final int _WORD_LEN = 5;
     private int _time;
-
+    private String _lastErrorMessage;
+    
     public Game() {
         _history = new ArrayList<>();
         _observers = new ArrayList<>();
@@ -53,10 +54,19 @@ public class Game implements Model {
     }
 
     public void newGuess(String guess) {
-        if (guess.length() != _WORD_LEN) return;
-        if (!isThereAttemptsLeft()) return;
+        if (guess.length() != _WORD_LEN) {
+        	_lastErrorMessage = "La palabra ingresada no es de 5 letras.";
+        	return;
+        }
+        if (!isThereAttemptsLeft()) {
+        	return;
+        }
 
-        if (!_fileLines.contains(guess.toLowerCase())) return;
+        if (!_fileLines.contains(guess.toLowerCase())) {
+            _lastErrorMessage = "La palabra ingresada no está en el listado.";
+            return;
+        }
+
         
         guess = guess.toLowerCase();
         LetterStatus status[] = new LetterStatus[_WORD_LEN];
@@ -135,7 +145,19 @@ public class Game implements Model {
     public int getTime() {
     	return _time;
     }
+    
+    public String getLastErrorMessage() {
+        return _lastErrorMessage;
+    }
 
+    public void clearLastErrorMessage() {
+        _lastErrorMessage = null;
+    }
+    
+    public String getSecretWord() {
+        return _secretWord;
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -152,4 +174,5 @@ public class Game implements Model {
 
         return sb.toString();
     }
+
 }

@@ -7,7 +7,9 @@ interface View {
 
 	public void showWinMessage();
 
-	public void showLoseMessage();
+	public void showLoseMessage(String secretWorl);
 
 	public void cleanScreen();
+	
+	public void showErrorMessage(String message);
 }
