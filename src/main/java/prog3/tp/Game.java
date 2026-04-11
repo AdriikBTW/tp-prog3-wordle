@@ -18,25 +18,22 @@ public class Game implements Model {
     private final int _WORD_LEN = 5;
     private int _time;
     private String _lastErrorMessage;
-    
+
     public Game() {
         _history = new ArrayList<>();
         _observers = new ArrayList<>();
         _attempts = 0;
-        
 
         try {
             _fileLines = Files.readAllLines(Paths.get("src/main/resources/spanish_words.txt"));
         } catch (IOException e) {
-            e.printStackTrace();	
+            e.printStackTrace();
         }
-        
+
         _secretWord = getRandomWord().toLowerCase();
     }
 
-
-
-	public String getRandomWord() {
+    public String getRandomWord() {
         Random rng = new Random();
         return _fileLines.get(rng.nextInt(_fileLines.size()));
     }
@@ -55,11 +52,11 @@ public class Game implements Model {
 
     public void newGuess(String guess) {
         if (guess.length() != _WORD_LEN) {
-        	_lastErrorMessage = "La palabra ingresada no es de 5 letras.";
-        	return;
+            _lastErrorMessage = "La palabra ingresada no es de 5 letras.";
+            return;
         }
         if (!isThereAttemptsLeft()) {
-        	return;
+            return;
         }
 
         if (!_fileLines.contains(guess.toLowerCase())) {
@@ -67,7 +64,6 @@ public class Game implements Model {
             return;
         }
 
-        
         guess = guess.toLowerCase();
         LetterStatus status[] = new LetterStatus[_WORD_LEN];
         boolean isLetterUsed[] = new boolean[_WORD_LEN];
@@ -110,42 +106,40 @@ public class Game implements Model {
     public Integer getAttempts() {
         return _attempts;
     }
-    
+
     public int checkGameStatus(String guess) {
-    	if(guess.equals(this._secretWord)) {
-    		return 	0;
-    	}
-    	if(!isThereAttemptsLeft()) {
-    		return 1;
-    	}
-    	else return 2;
+        if (guess.equals(this._secretWord)) {
+            return 0;
+        }
+        if (!isThereAttemptsLeft()) {
+            return 1;
+        } else return 2;
     }
-    
+
     public void restart() {
-   	 _attempts = 0;
-     _history = new ArrayList<>();
-     _time = 0;
+        _attempts = 0;
+        _history = new ArrayList<>();
+        _time = 0;
 
         try {
             _fileLines = Files.readAllLines(Paths.get("src/main/resources/spanish_words.txt"));
         } catch (IOException e) {
-            e.printStackTrace();	
+            e.printStackTrace();
         }
 
         _secretWord = getRandomWord().toLowerCase();
         notifyObservers();
-       
-   }
-    
+    }
+
     public void setTime(int time) {
-    	this._time = time;
-    	notifyObservers();
+        this._time = time;
+        notifyObservers();
     }
-    
+
     public int getTime() {
-    	return _time;
+        return _time;
     }
-    
+
     public String getLastErrorMessage() {
         return _lastErrorMessage;
     }
@@ -153,11 +147,11 @@ public class Game implements Model {
     public void clearLastErrorMessage() {
         _lastErrorMessage = null;
     }
-    
+
     public String getSecretWord() {
         return _secretWord;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -174,5 +168,4 @@ public class Game implements Model {
 
         return sb.toString();
     }
-
 }

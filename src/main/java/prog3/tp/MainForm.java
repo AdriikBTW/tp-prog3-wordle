@@ -88,8 +88,6 @@ public class MainForm implements View {
         _marginPanel.add(_gamePanel, "game");
         _mainPanel.add(_guessPanel);
         _mainPanel.add(_alphabetPanel);
-        
-        
     }
 
     private void setUpFrame() {
@@ -137,7 +135,7 @@ public class MainForm implements View {
     private void setUpInfoPanel() {
         _infoPanel = new JPanel();
         _infoPanel.setLayout(new FlowLayout());
-        _infoPanel.setBorder(new EmptyBorder(0,0,50,0));
+        _infoPanel.setBorder(new EmptyBorder(0, 0, 50, 0));
         _attempts = new JLabel("Attempts: 0/6");
         _timerLabel = new JLabel("Time: 00:00");
         _infoPanel.add(_attempts);
@@ -153,7 +151,7 @@ public class MainForm implements View {
 
         _guessPanel = new JPanel();
         _guessPanel.setLayout(new GridLayout(rows, cols, hgap, vgap));
-        _guessPanel.setBorder(new EmptyBorder(0,0,0,0));
+        _guessPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
         _guessPanel.setPreferredSize(new Dimension(400, 400));
         _guessPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 400));
 
@@ -165,30 +163,29 @@ public class MainForm implements View {
                 label.setOpaque(true);
                 label.setBackground(Color.DARK_GRAY);
                 label.setForeground(Color.WHITE);
-                
+
                 _guess_grid[i][j] = label;
                 _guessPanel.add(label);
             }
         }
     }
-    
+
     private void setUpAlphabetPanel() {
         int rows = 3;
         int cols = 3;
         int hgap = 1;
-        int vgap = 5;	
-        
+        int vgap = 5;
+
         String alphabet = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-        
+
         _alphabetPanel = new JPanel();
         _alphabetPanel.setLayout(new GridLayout(rows, cols, hgap, vgap));
-        _alphabetPanel.setBorder(new EmptyBorder(100,70,50,70));
+        _alphabetPanel.setBorder(new EmptyBorder(100, 70, 50, 70));
 
         _alphabet_grid = new JLabel[27];
 
         for (int i = 0; i < alphabet.length(); i++) {
-        	char letter = alphabet.charAt(i);
-        
+            char letter = alphabet.charAt(i);
 
             JLabel label = new JLabel(String.valueOf(letter), SwingConstants.CENTER);
             label.setOpaque(true);
@@ -204,7 +201,7 @@ public class MainForm implements View {
     private void setUpInputPanel() {
         _inputPanel = new JPanel();
         _inputPanel.setLayout(new FlowLayout());
-        _inputPanel.setBorder(new EmptyBorder(0,0,0,0));
+        _inputPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
         JTextField inputTextField = new JTextField("", 10);
         JButton submitButton = new JButton("Submit");
         submitButton.addActionListener(
@@ -218,54 +215,54 @@ public class MainForm implements View {
         _inputPanel.add(inputTextField);
         _inputPanel.add(submitButton);
     }
-    
-	public void showWinMessage() {
-		Object[] opciones = {"Reintentar", "Cerrar"};
-		
-		int selecction = JOptionPane.showOptionDialog(
-		        null,
-		        "Has ganado, ¿Qué querés hacer?",
-		        "Fin del juego",
-		        JOptionPane.YES_NO_OPTION,
-		        JOptionPane.QUESTION_MESSAGE,
-		        null,
-		        opciones,
-		        opciones[0]
-		);
 
-		if(selecction == 0) {
-			_presenter.restartGame();
-			cleanScreen();
-		} else {
-			System.exit(0);
-		}
-	}
-	
-	public void showLoseMessage(String secretWord) {
-	    Object[] opciones = {"Reintentar", "Cerrar"};
+    public void showWinMessage() {
+        Object[] opciones = {"Reintentar", "Cerrar"};
 
-	    int selecction = JOptionPane.showOptionDialog(
-	        null,
-	        "Perdiste. La palabra era: " + secretWord + "\n¿Qué querés hacer?",
-	        "Fin del juego",
-	        JOptionPane.YES_NO_OPTION,
-	        JOptionPane.QUESTION_MESSAGE,
-	        null,
-	        opciones,
-	        opciones[0]
-	    );
+        int selecction =
+                JOptionPane.showOptionDialog(
+                        null,
+                        "Has ganado, ¿Qué querés hacer?",
+                        "Fin del juego",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        opciones,
+                        opciones[0]);
 
-	    if(selecction == 0) {
-	        _presenter.restartGame();
-	        cleanScreen();
-	    } else {
-	        System.exit(0);
-	    }
-	}
+        if (selecction == 0) {
+            _presenter.restartGame();
+            cleanScreen();
+        } else {
+            System.exit(0);
+        }
+    }
 
+    public void showLoseMessage(String secretWord) {
+        Object[] opciones = {"Reintentar", "Cerrar"};
+
+        int selecction =
+                JOptionPane.showOptionDialog(
+                        null,
+                        "Perdiste. La palabra era: " + secretWord + "\n¿Qué querés hacer?",
+                        "Fin del juego",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        opciones,
+                        opciones[0]);
+
+        if (selecction == 0) {
+            _presenter.restartGame();
+            cleanScreen();
+        } else {
+            System.exit(0);
+        }
+    }
 
     @Override
-    public void updateView(String[] words, LetterStatus[][] statusList, Integer attempts, Integer time) {
+    public void updateView(
+            String[] words, LetterStatus[][] statusList, Integer attempts, Integer time) {
         for (int i = 0; i < words.length; i++) {
             String word = words[i].toUpperCase();
             LetterStatus[] status = statusList[i];
@@ -273,18 +270,18 @@ public class MainForm implements View {
             for (int j = 0; j < word.length(); j++) {
                 _guess_grid[i][j].setText(String.valueOf(word.charAt(j)));
                 _guess_grid[i][j].setBackground(statusToString(status[j]));
-            
-               for (int x = 0; x < _alphabet_grid.length; x++) {
+
+                for (int x = 0; x < _alphabet_grid.length; x++) {
                     if (_alphabet_grid[x].getText().equals(String.valueOf(word.charAt(j)))) {
                         _alphabet_grid[x].setBackground(statusToString(status[j]));
-                       break;
-                   }
-               } 
-            }   
+                        break;
+                    }
+                }
+            }
         }
 
         _attempts.setText("Attempts: " + attempts.toString() + "/6");
-        
+
         int seconds = time % 60;
         int minutes = time / 60;
 
@@ -304,35 +301,29 @@ public class MainForm implements View {
                 return Color.BLACK;
         }
     }
-    
+
     public void cleanScreen() {
-    	    for (int i = 0; i < _guess_grid.length; i++) {
-    	        for (int j = 0; j < _guess_grid[i].length; j++) {
-    	            _guess_grid[i][j].setText("");
-    	            _guess_grid[i][j].setBackground(Color.DARK_GRAY);
-    	        }
-    	    }
+        for (int i = 0; i < _guess_grid.length; i++) {
+            for (int j = 0; j < _guess_grid[i].length; j++) {
+                _guess_grid[i][j].setText("");
+                _guess_grid[i][j].setBackground(Color.DARK_GRAY);
+            }
+        }
 
-    	    for (int i = 0; i < _alphabet_grid.length; i++) {
-    	        _alphabet_grid[i].setBackground(Color.LIGHT_GRAY);
-    	    }
+        for (int i = 0; i < _alphabet_grid.length; i++) {
+            _alphabet_grid[i].setBackground(Color.LIGHT_GRAY);
+        }
 
-    	    _attempts.setText("Attempts: 0/6");
-    	    _timerLabel.setText("Time: 00:00");
-
+        _attempts.setText("Attempts: 0/6");
+        _timerLabel.setText("Time: 00:00");
     }
 
     @Override
     public void setPresenter(Presenter presenter) {
         _presenter = presenter;
     }
-    
+
     public void showErrorMessage(String message) {
-        JOptionPane.showMessageDialog(
-            _frame,
-            message,
-            "Error",
-            JOptionPane.ERROR_MESSAGE
-        );
+        JOptionPane.showMessageDialog(_frame, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

@@ -1,9 +1,9 @@
 package prog3.tp;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.Timer;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 class Presenter implements Observer {
     private final Model _model;
@@ -16,29 +16,32 @@ class Presenter implements Observer {
 
         _view.setPresenter(this);
         _model.addObserver(this);
-        
+
         startTimer();
     }
 
     private void startTimer() {
-		_timer = new Timer(1000, new ActionListener() {
-			public void actionPerformed(ActionEvent e ) {
-					int time = _model.getTime();
-					_model.setTime(time+1);
-					update();
-			}
-		}); 
-		_timer.start();
-		
-	}
-    
-    public void stopTimer() {
-    	if (_timer != null) {
-    		_timer.stop();
-    	}
-    };
+        _timer =
+                new Timer(
+                        1000,
+                        new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                int time = _model.getTime();
+                                _model.setTime(time + 1);
+                                update();
+                            }
+                        });
+        _timer.start();
+    }
 
-	public void newGuess(String guess) {
+    public void stopTimer() {
+        if (_timer != null) {
+            _timer.stop();
+        }
+    }
+    ;
+
+    public void newGuess(String guess) {
         _model.newGuess(guess);
     }
 
@@ -52,8 +55,8 @@ class Presenter implements Observer {
                 return;
             }
         }
-    	
-    	// NOTE: really is all this better than just passing Guess to view?
+
+        // NOTE: really is all this better than just passing Guess to view?
         List<Guess> history = _model.getHistory();
         String[] words = new String[history.size()];
         LetterStatus[][] statusList = new LetterStatus[history.size()][];
@@ -63,31 +66,30 @@ class Presenter implements Observer {
             statusList[i] = history.get(i).getStatus();
         }
 
-        _view.updateView(words, statusList, _model.getAttempts(), _model.getTime());        
+        _view.updateView(words, statusList, _model.getAttempts(), _model.getTime());
     }
 
-	public void checkGameStatus(String guess) {
-		int status = _model.checkGameStatus(guess);
-		
-		switch(status) {
-			case 0:
-				stopTimer();
-				_view.showWinMessage();
-				break;
-			
-			case 1: 
-			
-			    stopTimer();
-			    if (_model instanceof Game) {
-			        Game game = (Game) _model;
-			        _view.showLoseMessage(game.getSecretWord());
-			    }
-			    break;
-		}
-	}
-	
-	public void restartGame() {
-		_model.restart();
-		startTimer();
-	}
+    public void checkGameStatus(String guess) {
+        int status = _model.checkGameStatus(guess);
+
+        switch (status) {
+            case 0:
+                stopTimer();
+                _view.showWinMessage();
+                break;
+
+            case 1:
+                stopTimer();
+                if (_model instanceof Game) {
+                    Game game = (Game) _model;
+                    _view.showLoseMessage(game.getSecretWord());
+                }
+                break;
+        }
+    }
+
+    public void restartGame() {
+        _model.restart();
+        startTimer();
+    }
 }

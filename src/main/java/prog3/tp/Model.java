@@ -13,11 +13,11 @@ interface Model {
 
     public Integer getAttempts();
 
-	public int checkGameStatus(String guess);
+    public int checkGameStatus(String guess);
 
-	public void restart();
+    public void restart();
 
-	public int getTime();
+    public int getTime();
 
-	public void setTime(int i);
+    public void setTime(int i);
 }
