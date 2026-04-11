@@ -1,12 +1,14 @@
 package prog3.tp;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +26,10 @@ import javax.swing.border.EmptyBorder;
 public class MainForm implements View {
     private Presenter _presenter;
     private JFrame _frame;
+    private CardLayout _cardLayout;
     private JPanel _marginPanel;
+    private JPanel _gamePanel;
+    private JPanel _menuPanel;
     private JPanel _mainPanel;
     private JPanel _infoPanel;
     private JPanel _guessPanel;
@@ -70,17 +75,17 @@ public class MainForm implements View {
     private void initialize() {
         setUpFrame();
         setUpMarginPanel();
+        setUpMenuPanel();
         setUpMainPanel();
         setUpInfoPanel();
         setUpGuessPanel();
         setUpInputPanel();
         setUpAlphabetPanel();
+        setUpGamePanel();
 
         _frame.add(_marginPanel, BorderLayout.CENTER);
-        _marginPanel.setLayout(new BorderLayout());
-        _marginPanel.add(_infoPanel, BorderLayout.NORTH);
-        _marginPanel.add(_mainPanel, BorderLayout.CENTER);
-        _marginPanel.add(_inputPanel, BorderLayout.SOUTH);
+        _marginPanel.add(_menuPanel, "menu");
+        _marginPanel.add(_gamePanel, "game");
         _mainPanel.add(_guessPanel);
         _mainPanel.add(_alphabetPanel);
         
@@ -96,8 +101,32 @@ public class MainForm implements View {
 
     private void setUpMarginPanel() {
         _marginPanel = new JPanel();
-        _marginPanel.setLayout(new BorderLayout());
+        _cardLayout = new CardLayout();
+        _marginPanel.setLayout(_cardLayout);
         _marginPanel.setBorder(new EmptyBorder(50, 50, 50, 50));
+    }
+
+    private void setUpMenuPanel() {
+        _menuPanel = new JPanel();
+        _menuPanel.setLayout(new GridBagLayout());
+
+        JButton startButton = new JButton("Jugar");
+        _menuPanel.add(startButton);
+
+        startButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        _cardLayout.show(_marginPanel, "game");
+                    }
+                });
+    }
+
+    private void setUpGamePanel() {
+        _gamePanel = new JPanel(new BorderLayout());
+
+        _gamePanel.add(_infoPanel, BorderLayout.NORTH);
+        _gamePanel.add(_mainPanel, BorderLayout.CENTER);
+        _gamePanel.add(_inputPanel, BorderLayout.SOUTH);
     }
 
     private void setUpMainPanel() {
