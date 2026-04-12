@@ -109,6 +109,8 @@ public class MainForm implements View {
         _menuPanel.setLayout(new GridBagLayout());
 
         JButton startButton = new JButton("Jugar");
+        startButton.setPreferredSize(new Dimension(100, 50));
+        startButton.setFont(new Font("Sans-Serif", Font.PLAIN, 15));
         _menuPanel.add(startButton);
 
         startButton.addActionListener(
@@ -138,7 +140,9 @@ public class MainForm implements View {
         _infoPanel.setLayout(new FlowLayout());
         _infoPanel.setBorder(new EmptyBorder(0, 0, 50, 0));
         _attempts = new JLabel("Attempts: 0/6");
+        _attempts.setFont(new Font("Sans-Serif", Font.BOLD, 15));
         _timerLabel = new JLabel("Time: 00:00");
+        _timerLabel.setFont(new Font("Sans-Serif", Font.BOLD, 15));
         _infoPanel.add(_attempts);
         _infoPanel.add(_timerLabel);
     }
@@ -203,8 +207,14 @@ public class MainForm implements View {
         _inputPanel = new JPanel();
         _inputPanel.setLayout(new FlowLayout());
         _inputPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
+
         JTextField inputTextField = new JTextField("", 10);
+        inputTextField.setPreferredSize(new Dimension(100, 50));
+        inputTextField.setFont(new Font("Sans-Serif", Font.PLAIN, 15));
+
         JButton submitButton = new JButton("Submit");
+        submitButton.setPreferredSize(new Dimension(100, 50));
+        submitButton.setFont(new Font("Sans-Serif", Font.PLAIN, 15));
         submitButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
