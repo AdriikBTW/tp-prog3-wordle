@@ -111,7 +111,13 @@ public class MainForm implements View {
         JButton startButton = new JButton("Jugar");
         startButton.setPreferredSize(new Dimension(100, 50));
         startButton.setFont(new Font("Sans-Serif", Font.PLAIN, 15));
+
+        JButton languageButton = new JButton("Language");
+        languageButton.setPreferredSize(new Dimension(200, 50));
+        languageButton.setFont(new Font("Sans-Serif", Font.PLAIN, 15));
+
         _menuPanel.add(startButton);
+        _menuPanel.add(languageButton);
 
         startButton.addActionListener(
                 new ActionListener() {
@@ -120,6 +126,30 @@ public class MainForm implements View {
                         _presenter.startTimer();
                     }
                 });
+
+        languageButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        showLanguageMessage();
+                    }
+                });
+    }
+
+    private void showLanguageMessage() {
+        Object[] opciones = {"Español", "Inglés"};
+        int selection =
+                JOptionPane.showOptionDialog(
+                        null,
+                        "¿Qué idioma quieres jugar?",
+                        "Elige idioma",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        opciones,
+                        opciones[0]);
+
+        if (selection == 0) _presenter.setLanguage("spanish");
+        else _presenter.setLanguage("english");
     }
 
     private void setUpGamePanel() {

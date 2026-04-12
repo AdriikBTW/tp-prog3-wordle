@@ -11,6 +11,7 @@ import java.util.Random;
 public class Game implements Model {
     private List<Guess> _history;
     private List<Observer> _observers;
+    private String _language;
     private String _secretWord;
     private int _attempts;
     private List<String> _fileLines;
@@ -24,13 +25,32 @@ public class Game implements Model {
         _observers = new ArrayList<>();
         _attempts = 0;
 
-        try {
-            _fileLines = Files.readAllLines(Paths.get("src/main/resources/spanish_words.txt"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        setLanguage("spanish");
         _secretWord = getRandomWord().toLowerCase();
+    }
+
+    public void setLanguage(String language) {
+        _language = language;
+
+        switch (_language) {
+            case "spanish":
+                try {
+                    _fileLines =
+                            Files.readAllLines(Paths.get("src/main/resources/spanish_words.txt"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "english":
+                try {
+                    _fileLines =
+                            Files.readAllLines(Paths.get("src/main/resources/english_words.txt"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            default:
+                break;
+        }
     }
 
     public String getRandomWord() {
@@ -121,10 +141,26 @@ public class Game implements Model {
         _history = new ArrayList<>();
         _time = 0;
 
-        try {
-            _fileLines = Files.readAllLines(Paths.get("src/main/resources/spanish_words.txt"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        switch (_language) {
+            case "spanish":
+                try {
+                    _fileLines =
+                            Files.readAllLines(Paths.get("src/main/resources/spanish_words.txt"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "english":
+                try {
+                    _fileLines =
+                            Files.readAllLines(Paths.get("src/main/resources/english_words.txt"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            default:
+                break;
         }
 
         _secretWord = getRandomWord().toLowerCase();

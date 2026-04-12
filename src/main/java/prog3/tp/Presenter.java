@@ -37,7 +37,10 @@ class Presenter implements Observer {
             _timer.stop();
         }
     }
-    ;
+
+    public void setLanguage(String language) {
+        _model.setLanguage(language);
+    }
 
     public void newGuess(String guess) {
         _model.newGuess(guess);

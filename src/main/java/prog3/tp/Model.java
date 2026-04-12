@@ -5,6 +5,8 @@ import java.util.List;
 interface Model {
     public void addObserver(Observer observer);
 
+    public void setLanguage(String language);
+
     public boolean isThereAttemptsLeft();
 
     public void newGuess(String guess);
