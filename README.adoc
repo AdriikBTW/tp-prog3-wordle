@@ -1,39 +1,50 @@
 = TP Programación III: W-UNGS-dle
-Adrián Romero; Emiliano; Lautaro Romero; Nahuel Lopez
+Adrián Romero; Emiliano Carrasco; Lautaro Romero; Nahuel Lopez
 :revdate: {docdate}
 :revremark: COM-02
 :version-label!:
 :title-page:
+:title-logo-image: image::ungs.jpg[]
 
-== Lorem Ipsum
+== Diseño de la Interfaz Gráfica
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent efficitur in 
-metus et dictum. Aenean eget mi aliquam, dignissim enim id, elementum nibh. 
-Donec condimentum lorem quis tempus tempus. Curabitur euismod, nunc nec semper 
-sodales, diam augue posuere ligula, vel convallis est lorem in justo. Fusce 
-quis mauris nec nulla eleifend ultrices. Aliquam gravida lectus sed erat 
-pulvinar consectetur. Praesent ultrices mi urna, vitae condimentum massa 
-viverra vel. Nullam in ultrices leo, vel vestibulum dolor. Vestibulum varius 
-pulvinar erat eu tincidunt. Morbi porta eros felis, et commodo ex pulvinar 
-sollicitudin. Vivamus at lacus orci. Duis justo felis, posuere id dui quis, 
-venenatis imperdiet turpis. Suspendisse aliquet diam nec vestibulum pretium. 
-Nam ut magna nisl.
+En este proyecto recreamos el juego Wordle en el cuál consiste en adivinar una
+palabra con 5 letras. Utilizamos la arquitectura MPV (Model-View-Presenter)
+para construir la Interfaz Gráfica de Usuario (GUI).
 
-Ut et turpis nec lectus accumsan faucibus. Integer sodales erat vel aliquam 
-ornare. Vivamus euismod ipsum erat, vel suscipit nisl vehicula non. Vestibulum 
-aliquam leo eget eros pharetra, at bibendum metus laoreet. Nam et arcu erat. 
-Phasellus rhoncus ut elit sit amet accumsan. In vel dui cursus, finibus massa 
-in, cursus odio. Sed a nisl eget purus consequat placerat. Proin sit amet 
-malesuada neque.
+Para este proyecto el MPV está construído de la siguiente manera:
 
-Nulla dignissim nulla quam. Nullam et lacinia velit, vel sollicitudin odio. 
-Nullam lacinia placerat vehicula. Integer odio dui, scelerisque ac enim a, 
-interdum tempus magna. Aliquam metus nibh, tristique vel neque non, mattis 
-pulvinar sem. Quisque et velit convallis, tempus turpis eget, aliquam erat. 
-Donec pharetra odio sed ipsum cursus mollis. Maecenas bibendum lacus eu ipsum 
-facilisis porta. Nunc ac feugiat erat. Pellentesque mattis lectus felis, vitae 
-aliquam nibh molestie vitae. Donec vestibulum ipsum vel diam consectetur 
-gravida. Nulla laoreet risus nulla, at hendrerit est suscipit non. Aliquam sit 
-amet tellus sollicitudin, consectetur lorem sit amet, pellentesque justo. Duis 
-non dolor sit amet mauris dictum sollicitudin. Vestibulum est dolor, suscipit 
-vitae accumsan eget, dignissim molestie orci.
+- `Presenter.java` siendo el Presenter, actuándo como intermediario entre
+  la Vista y el Modelo. La Vista le envía los datos introducidos por el usuario
+  y el Presenter consume los métodos apropiados del Modelo.
+- `MainForm.java` siendo la Vista, el cúal está encargado de obtener la
+  interacción del usuario, enviar dicha interacción al Presenter y actualizar
+  sus atributos al recibir datos del Presenter.
+- `Game.java` siendo el Modelo, es decir la lógica del juego, recibe la
+  información del Presenter y la procesa. Cuándo termina de procesar dicha
+  información, notifica al Presenter para modificar la Vista.
+
+Para que el Modelo pueda notificar al Presenter, se implementó un Observer, el
+cuál permite al Presenter "suscribirse" al Modelo, y ser notificado de los
+cambios. Cuando es notificado, llama los métodos correspondientes de la Vista
+para que esta actualice la Interfaz Gráfica.
+
+Uno de los métodos más importantes es el `updateView()` que recibe la
+información procesada del Presenter y actualiza la representación de la interfaz.
+Recibe los intentos del usuario, el estado de las palabras enviadas, cuantas
+intentos le quedan disponible y su tiempo de juego, y actualiza sus atributos
+para mostrarlo en la ventana del juego.
+
+== Dificultades
+
+Una de las dificultades de este proyecto fue la construcción de la GUI. Al
+nunca haber utilizado WindowBuilder, realizar un correcto layout de los paneles
+fue una tarea ardua de organizar, ya que fue complicado ubicar los paneles en
+las posiciones deseadas en la interfaz. A pesar de todo esto, pudimos construir
+una interfaz agradable e intuitiva para el usuario.
+
+La otra dificultad fue el diseño del MVP, y gestionar las responsabilidades de
+cada clase y la comunicación entre ellas. Al separar las responsabilidades, se
+obtiene una alta cohesión y bajo acoplamiento, permitiendo separar la interfaz
+y el juego. De esta manera es posible reemplazar los módulos sin generar
+cambios drásticos en el código.
