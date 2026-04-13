@@ -48,3 +48,16 @@ cada clase y la comunicación entre ellas. Al separar las responsabilidades, se
 obtiene una alta cohesión y bajo acoplamiento, permitiendo separar la interfaz
 y el juego. De esta manera es posible reemplazar los módulos sin generar
 cambios drásticos en el código.
+
+== Cosas a mejorar
+
+Una de las cosas a mejorar es reducir la cantidad de paneles y elementos de la
+GUI. Buscar una manera de obtener el mismo resultado con un layout más simple,
+con menos elementos.
+
+La obtención de la palabra secreta en el archivo podría optimizarse evitando
+cargar completamente el archivo en memoria, y solo cargar la palabra random.
+
+La selección de la dificultad hizo que en múltiples partes del juego se abran
+constantemente los archivos correspondientes. Una forma de solucionar esto
+podría ser abstrayendo las operaciones con los archivos en una clase auxiliar.
